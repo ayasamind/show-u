@@ -1,40 +1,32 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\User $user
+ * @var \App\Model\Entity\Category $category
  */
 ?>
-<div class="users view large-9 medium-8 columns content">
-    <h3><?= h($user->id) ?></h3>
+<div class="categories view large-9 medium-8 columns content">
+    <h3><?= h($category->name) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($user->id) ?></td>
+            <td><?= $this->Number->format($category->id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($user->created) ?></td>
+            <td><?= h($category->created) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($user->modified) ?></td>
+            <td><?= h($category->modified) ?></td>
         </tr>
     </table>
     <div class="row">
-        <h4><?= __('Username') ?></h4>
-        <?= $this->Text->autoParagraph(h($user->username)); ?>
-    </div>
-    <div class="row">
-        <h4><?= __('Password') ?></h4>
-        <?= $this->Text->autoParagraph(h($user->password)); ?>
-    </div>
-    <div class="row">
-        <h4><?= __('Email') ?></h4>
-        <?= $this->Text->autoParagraph(h($user->email)); ?>
+        <h4><?= __('Name') ?></h4>
+        <?= $this->Text->autoParagraph(h($category->name)); ?>
     </div>
     <div class="related">
         <h4><?= __('Related Belongings') ?></h4>
-        <?php if (!empty($user->belongings)): ?>
+        <?php if (!empty($category->belongings)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -47,7 +39,7 @@
                 <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($user->belongings as $belongings): ?>
+            <?php foreach ($category->belongings as $belongings): ?>
             <tr>
                 <td><?= h($belongings->id) ?></td>
                 <td><?= h($belongings->name) ?></td>

@@ -4,24 +4,12 @@
  * @var \Cake\Datasource\EntityInterface $belonging
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Belongings'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
 <div class="belongings form large-9 medium-8 columns content">
     <?= $this->Form->create($belonging) ?>
-    <fieldset>
-        <legend><?= __('Add Belonging') ?></legend>
-        <?php
-            echo $this->Form->control('name');
-            echo $this->Form->control('user_id');
-            echo $this->Form->control('category_id');
-            echo $this->Form->control('description');
-            echo $this->Form->control('photo');
-        ?>
-    </fieldset>
+        <?= $this->Form->control('name', ['type' => 'text']) ?>
+        <?= $this->Form->control('category_id', ['type' => 'select', 'option' => $category]);?>
+        <?= $this->Form->control('description', ['type' => 'textarea']);?>
+        <?= $this->Form->control('photo', ['type' => 'file']);?>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>

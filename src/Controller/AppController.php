@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use App\Statics\UserInfo;
 
 /**
  * Application Controller
@@ -43,7 +44,17 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
-
+        $this->loadComponent('Auth', [
+            'loginRedirect' => [
+                'controller' => 'Belongings',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'authError' => 'アクセス権限がありません',
+        ]);
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -51,5 +62,15 @@ class AppController extends Controller
         //$this->loadComponent('Security');
         //$this->loadComponent('Csrf');
     }
+
+    public function beforeFilter(Event $event)
+   {
+       parent::beforeFilter($event);
+       $loginUser = $this->Auth->user();
+       if(!empty($loginUser)) {
+           UserInfo::$id = $loginUser['id'];
+           UserInfo::$username = $loginUser['username'];
+       }
+   }
 
 }

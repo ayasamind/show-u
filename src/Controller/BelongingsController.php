@@ -57,7 +57,8 @@ class BelongingsController extends AppController
             }
             $this->Flash->error(__('The belonging could not be saved. Please, try again.'));
         }
-        $this->set(compact('belonging'));
+        $category = $this->Belongings->Categories->find('list');
+        $this->set(compact('belonging', 'category'));
     }
 
     /**

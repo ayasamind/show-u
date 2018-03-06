@@ -29,13 +29,14 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->script("//cdn.jsdelivr.net/npm/vue")?>
     <?= $this->Html->css("//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css") ?>
     <?= $this->Html->script("//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js") ?>
+    <?= $this->Html->css("header") ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
 </head>
 <body class="fixed">
-    <?= $this->Flash->render() ?>
     <?= $this->Element('header') ?>
+    <?= $this->Flash->render() ?>
     <div class="container">
         <?= $this->fetch('content') ?>
     </div>

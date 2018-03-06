@@ -12,6 +12,11 @@ use App\Controller\AppController;
 class UsersController extends AppController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow(['login', 'add']);
+    }
     /**
      * Index method
      *
@@ -102,5 +107,25 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function login()
+    {
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                $this->Flash->success('ログインしました');
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error('ログインできませんでした。メールアドレスとパスワードをご確認ください。');
+        }
+        $this->set('title_for_layout', 'ログイン');
+    }
+
+    public function logout()
+    {
+        $this->Flash->success('ログアウトしました');
+        return $this->redirect($this->Auth->logout());
     }
 }
