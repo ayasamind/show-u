@@ -40,4 +40,5 @@
         <h4><?= __('Photo') ?></h4>
         <?= $this->Text->autoParagraph(h($belonging->photo)); ?>
     </div>
+    <?= $this->ContentsFile->image($belonging->contents_file_img, ['resize' => ['width' => 300, 'height' => 400, 'type' => 'scoop']]);?>
 </div>

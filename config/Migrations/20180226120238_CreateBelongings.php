@@ -31,10 +31,6 @@ class CreateBelongings extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
-        $table->addColumn('photo', 'text', [
-            'default' => null,
-            'null' => false,
-        ]);
         $table->addColumn('created', 'timestamp', [
             'default' => null,
             'null' => false,

@@ -27,6 +27,7 @@ class UsersController extends AppController
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
+        $this->set('title_for_layout', 'ユーザー一覧');
     }
 
     /**
@@ -63,6 +64,7 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $this->set(compact('user'));
+        $this->set('title_for_layout', 'ユーザー登録');
     }
 
     /**
@@ -87,6 +89,7 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $this->set(compact('user'));
+        $this->set('title_for_layout', 'ユーザー編集');
     }
 
     /**

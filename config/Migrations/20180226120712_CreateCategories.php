@@ -23,7 +23,7 @@ class CreateCategories extends AbstractMigration
         ]);
         $table->addColumn('modified', 'timestamp', [
             'default' => null,
-            'null' => false,
+            'null' => true,
         ]);
         $table->create();
     }

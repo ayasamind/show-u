@@ -38,7 +38,7 @@ class BelongingsTable extends Table
         $this->setTable('belongings');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
-
+        $this->addBehavior('ContentsFile.ContentsFile');
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Users', [
@@ -73,10 +73,31 @@ class BelongingsTable extends Table
             ->requirePresence('description', 'create')
             ->notEmpty('description');
 
+        // providerを読み込み
+        $validator->provider('contents_file', 'ContentsFile\Validation\ContentsFileValidation');
         $validator
-            ->scalar('photo')
-            ->requirePresence('photo', 'create')
-            ->notEmpty('photo');
+            ->notEmpty('img', 'ファイルを添付してください' , function ($context){
+                // fileValidationWhenメソッドを追加しました。
+                return $this->fileValidationWhen($context, 'img');
+            })
+            ->add('img', 'uploadMaxSizeCheck', [
+                'rule' => 'uploadMaxSizeCheck',
+                'provider' => 'contents_file',
+                'message' => 'ファイルアップロード容量オーバーです',
+                'last' => true,
+            ])
+            ->add('img', 'checkMaxSize', [
+                'rule' => ['checkMaxSize' , '1M'],
+                'provider' => 'contents_file',
+                'message' => 'ファイルアップロード容量オーバーです',
+                'last' => true,
+            ])
+            ->add('img', 'extension', [
+                'rule' => ['extension', ['jpg', 'jpeg', 'gif', 'png',]],
+                'message' => '画像のみを添付して下さい',
+                'last' => true,
+            ])
+            ;
 
         return $validator;
     }

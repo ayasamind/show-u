@@ -27,18 +27,25 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->meta('icon') ?>
     <?= $this->Html->script('//code.jquery.com/jquery-3.1.1.min.js') ?>
     <?= $this->Html->script("//cdn.jsdelivr.net/npm/vue")?>
-    <?= $this->Html->css("//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css") ?>
-    <?= $this->Html->script("//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js") ?>
+    <?= $this->Html->css("//cdn.jsdelivr.net/npm/semantic-ui@2.3.0/dist/semantic.min.css") ?>
+    <?= $this->Html->script("//cdn.jsdelivr.net/npm/semantic-ui@2.3.0/dist/semantic.min.js") ?>
     <?= $this->Html->css("header") ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
 </head>
-<body class="fixed">
-    <?= $this->Element('header') ?>
-    <?= $this->Flash->render() ?>
-    <div class="container">
-        <?= $this->fetch('content') ?>
+<body>
+    <div class="ui container">
+        <?= $this->Element('header') ?>
+        <div class='margin-top'>
+            <?= $this->Flash->render() ?>
+            <?= $this->fetch('content_header') ?>
+            <div class='ui segment'>
+                <div class='ui center aligned'>
+                    <?= $this->fetch('content') ?>
+                </div>
+            </div>
+        </div>
     </div>
     <?= $this->fetch('script') ?>
 </body>

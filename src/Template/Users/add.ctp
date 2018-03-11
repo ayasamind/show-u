@@ -6,14 +6,21 @@
 ?>
 <div class="users form large-9 medium-8 columns content">
     <?= $this->Form->create($user) ?>
-        <h3>ユーザー追加</h3>
-        <?php
-            echo $this->Form->control('username', [
-                'type' => 'text',
-            ]);
-            echo $this->Form->control('password');
-            echo $this->Form->control('email');
-        ?>
-    <?= $this->Form->button(__('Submit')) ?>
+        <label>ユーザー名</label>
+        <?= $this->Form->control('username', [
+            'type' => 'text',
+            'label' => false
+        ]);?>
+        <label>パスワード</label>
+        <?= $this->Form->control('password', [
+            'type' => 'password',
+            'label' => false
+        ]); ?>
+        <label>メールアドレス</label>
+        <?= $this->Form->control('email', [
+            'type' => 'text',
+            'label' => false
+        ]);?>
+    <?= $this->Form->button('登録', ['class' => 'ui primary button']) ?>
     <?= $this->Form->end() ?>
 </div>

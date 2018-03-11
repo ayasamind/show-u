@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use ContentsFile\Model\Entity\ContentsFileTrait;
 
 /**
  * Belonging Entity
@@ -20,7 +21,41 @@ use Cake\ORM\Entity;
  */
 class Belonging extends Entity
 {
+    // 追加項目
+    use ContentsFileTrait;
 
+    // 追加項目
+    public $contentsFileConfig = [
+        'fields' => [
+            'img' => [
+                'resize' => [
+                    // 画像のリサイズが必要な場合
+                    ['width' => 300],
+                    ['width' => 300, 'height' => 400],
+                    // typeには
+                    // normal(default) 長い方を基準に画像をリサイズする
+                    // normal_s 短い方を基準に画像をリサイズする
+                    // scoop 短い方を基準に画像をリサイズし、中央でくりぬきする
+                    ['width' => 300, 'height' => 400, 'type' => 'scoop'],
+                ],
+            ],
+        ],
+    ];
+
+    //&getメソッドをoverride
+    public function &get($property)
+    {
+        $value = parent::get($property);
+        $value = $this->getContentsFile($property, $value);
+        return $value;
+    }
+
+    //setメソッドをoverride
+    public function set($property, $value = null, array $options = []){
+        parent::set($property, $value , $options);
+        $this->setContentsFile();
+        return $this;
+    }
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -31,14 +66,6 @@ class Belonging extends Entity
      * @var array
      */
     protected $_accessible = [
-        'name' => true,
-        'user_id' => true,
-        'category_id' => true,
-        'description' => true,
-        'photo' => true,
-        'created' => true,
-        'modified' => true,
-        'user' => true,
-        'category' => true
+        '*' => true
     ];
 }

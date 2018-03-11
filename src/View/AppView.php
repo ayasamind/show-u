@@ -36,5 +36,21 @@ class AppView extends View
      */
     public function initialize()
     {
+        $this->loadHelper('Form', [
+            'templates' => 'input',
+        ]);
     }
+
+    public function render($view = null, $layout = null)
+     {
+       $title = 'Show-U';
+       $content_header = '';
+       if (array_key_exists('title_for_layout', $this->viewVars)) {
+           $title = $this->viewVars['title_for_layout'] . ' - ' . $title;
+           $content_header = "<h5 class='header center'>". $this->viewVars['title_for_layout'] ."</h5>";
+       }
+       $this->assign('title', $title);
+       $this->assign('content_header', $content_header);
+       return parent::render($view, $layout);
+     }
 }

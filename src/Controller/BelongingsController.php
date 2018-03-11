@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use App\Statics\UserInfo;
 /**
  * Belongings Controller
  *
@@ -11,7 +11,10 @@ use App\Controller\AppController;
  */
 class BelongingsController extends AppController
 {
-
+    // ヘルパー読み込み
+    public $helpers = [
+       'ContentsFile.ContentsFile',
+    ];
     /**
      * Index method
      *
@@ -22,6 +25,7 @@ class BelongingsController extends AppController
         $belongings = $this->paginate($this->Belongings);
 
         $this->set(compact('belongings'));
+        $this->set('title_for_layout', '持ち物一覧');
     }
 
     /**
@@ -38,6 +42,7 @@ class BelongingsController extends AppController
         ]);
 
         $this->set('belonging', $belonging);
+        $this->set('title_for_layout', '持ち物詳細');
     }
 
     /**
@@ -49,16 +54,21 @@ class BelongingsController extends AppController
     {
         $belonging = $this->Belongings->newEntity();
         if ($this->request->is('post')) {
-            $belonging = $this->Belongings->patchEntity($belonging, $this->request->getData());
+            $belonging = $this->Belongings->patchEntity($belonging, $this->request->getData(), [
+                'associate' => 'attachments'
+            ]);
+            $belonging->user_id = UserInfo::$id;
+            // debug($belonging); exit;
             if ($this->Belongings->save($belonging)) {
-                $this->Flash->success(__('The belonging has been saved.'));
+                $this->Flash->success('持ち物を保存しました');
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The belonging could not be saved. Please, try again.'));
+            $this->Flash->error('持ち物の保存に失敗しました');
         }
-        $category = $this->Belongings->Categories->find('list');
+        $category = $this->Belongings->Categories->find('list')->toArray();
         $this->set(compact('belonging', 'category'));
+        $this->set('title_for_layout', '持ち物登録');
     }
 
     /**
@@ -83,6 +93,7 @@ class BelongingsController extends AppController
             $this->Flash->error(__('The belonging could not be saved. Please, try again.'));
         }
         $this->set(compact('belonging'));
+        $this->set('title_for_layout', '持ち物編集');
     }
 
     /**
